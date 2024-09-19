@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hent Brugerdata</title>
+</head>
+<body>
+
+<h1>Hent Brugerdata</h1>
+
+<!-- Inputfelt til brugerens ID -->
+<label for="userId">Indtast Bruger ID:</label>
+<input type="number" id="userId" min="0" max="10" value="0">
+
+<!-- Knap til at hente data -->
+<button id="fetchButton">Hent Bruger</button>
+
+<!-- Område hvor brugerdata vil blive vist -->
+<div class="user-data" id="userData"></div>
+
+<!-- Inkluder JavaScript i HTML-filen -->
+<script>
+  document.getElementById('fetchButton').addEventListener('click', async function() {
+    // Hent bruger-ID fra inputfeltet
+    const id = document.getElementById('userId').value;
+
+    try {
+      // Lav en fetch request til at hente data for den bruger med det givne ID
+      const response = await fetch('http://jsonplaceholder.typicode.com/users/' + id);
+
+      // Tjek om responsen er ok (status 200-299)
+      if (!response.ok) {
+        throw new Error(`Fejl ${response.status}: ${response.statusText}'
+      }
+
+
+      const data = await response.json();
+
+
+        document.getElementById('userData').innerHTML = ` v
+                <h3>Brugerdetaljer</h3>
+        <p><strong>Navn:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Telefon:</strong> ${data.phone}</p>
+        <p><strong>Website:</strong> ${data.website}</p>
+        <p><strong>Firma:</strong> ${data.company.name}</p>
+        <p><strong>Adresse:</strong> ${data.address.street}, ${data.address.city}</p>;
+
+        }} catch (error) {
+            // Håndter fejl og vis dem på siden
+            document.getElementById('userData').innerHTML = <p style="color: red;">${error.message}</p>;
+        }
+    })
+</script>
+
+</body>
+</html>
+
